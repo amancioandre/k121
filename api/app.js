@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 /* DATABASE CONNECTION */
-mongoose.connect('http://localhost', { useNewUrlParser: true });
+mongoose.connect('http://localhost', { useNewUrlParser: true })
   .then((output) => {
     console.log(`Connected to Mongo: Databse ${output.connections[0].name}`)
   })
@@ -21,7 +21,7 @@ mongoose.connect('http://localhost', { useNewUrlParser: true });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-/* We should require CORS sometime along the development! */
+/* We must require CORS sometime along the development! */
 
 /* APP ROUTES */
 
