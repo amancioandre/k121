@@ -30,6 +30,13 @@ Dúvidas? É só responder este e-mail.
 Att.
 @TechTeam Kenoby
 
+
+#Hipóteses#
+1) Deve-se aceitar um número muito grande de amigos.
+2) Uma turma não pode se misturar com outra. -> Sol. tempo de expiração dos dados da database?
+3) A roleta pode ocorrer no client e na api. Problemas, roleta no client pode ser adulterada, server é mais seguro.
+4) Se o amigo secreto for ele mesmo, escolha outro.
+
 Development Process
 
 Repository for the whole project - check
