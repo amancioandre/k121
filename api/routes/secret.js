@@ -49,12 +49,12 @@ router.get('/secret', (req, res, next) => {
         return acc;
       }, []);
       friends.forEach((friend) => {
-        let idx = rnd(idList.length);
+        const idx = rnd(idList.length);
 
         const secretFriend = idList.splice(idx, 1)[0];
         console.log(friend, idx, secretFriend);
         Friend.findOneAndUpdate({ _id: friend._id }, { secretFriend })
-          .then(res => console.log(">>>>", res));
+          .then(res => console.log('>>>>', res));
       });
       res.json({ message: 'All done! Have a happy celebration of friendship! ' });
     })
