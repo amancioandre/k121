@@ -36,6 +36,7 @@ Att.
 2) Uma turma não pode se misturar com outra. -> Sol. tempo de expiração dos dados da database?
 3) A roleta pode ocorrer no client e na api. Problemas, roleta no client pode ser adulterada, server é mais seguro.
 4) Se o amigo secreto for ele mesmo, escolha outro.
+  Problema: o amigo pode ser ele mesmo se for o último.
 
 Development Process
 
