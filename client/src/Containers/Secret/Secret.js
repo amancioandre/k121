@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 
 /* Components */
-
+import Field from "../../Components/Form/Fields";
 
 export default class Secret extends Component {
   constructor(props) {
@@ -48,7 +48,7 @@ export default class Secret extends Component {
   
   removeFriend(idx) {
     this.setState((prevState) => {
-      const friends = [...prevState];
+      const friends = [...prevState.friends];
       friends.slice(idx, 1);
       return { friends }
     })
@@ -62,7 +62,20 @@ export default class Secret extends Component {
 
     return (
       <div>
-        Here goes the Secret Friends main app logic.
+        <form>
+          <div>
+            <label htmlFor="event-name">Event Name</label>
+            <input id="event-name" type="text" />
+          </div>
+          <div>
+            <label htmlFor="event-date">Event Date</label>
+            <input id="event-date" type="date" />
+          </div>
+          <Field friends={this.state.friends} />
+          <input type="submit" value="Shuffle my Friends!" />
+        </form>
+        <button onClick={this.addFriend}>Add Friend</button>
+        <button onClick={this.clearFriends}>Clear Friends List</button>
       </div>
     )
   }
