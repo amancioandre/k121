@@ -12,6 +12,13 @@ export default class Secret extends Component {
 
     this.state = {
       friends : [{ name: '', email: ''}],
+      event: { 
+        title: '',
+        date: '',
+        time: '',
+        giftValue: '',
+        description: 'Hey friends, guess what!? ...'
+      },
       submiting: false,
     }
 
@@ -24,13 +31,15 @@ export default class Secret extends Component {
 
   handleChange(e) {
     const { value, className, dataset: { id }, name } = e.target;
+    const { event } = this.state
 
     if (["name", "email"].includes(className)) {
       let friends = [...this.state.friends];
       friends[id][className] = value;
       this.setState({ friends });
     } else {
-      this.setState({ [name]: value });
+      event[name] = value;
+      this.setState({ event });
     }
   }
 
@@ -49,7 +58,7 @@ export default class Secret extends Component {
   removeFriend(idx) {
     this.setState((prevState) => {
       const friends = [...prevState.friends];
-      friends.slice(idx, 1);
+      friends.splice(idx, 1);
       return { friends }
     })
   }
@@ -59,19 +68,41 @@ export default class Secret extends Component {
   }
 
   render() {
+    const { friends, event: { title, date, description } } = this.state;
 
     return (
       <div>
-        <form>
+        <form onChange={(e) => this.handleChange(e)}>
           <div>
-            <label htmlFor="event-name">Event Name</label>
-            <input id="event-name" type="text" />
+            <label htmlFor="title">Event Title</label>
+            <input 
+              id="title" 
+              name="title" 
+              type="text" 
+              value={title}
+            />
           </div>
           <div>
-            <label htmlFor="event-date">Event Date</label>
-            <input id="event-date" type="date" />
+            <label htmlFor="date">Event Date</label>
+            <input 
+              id="date" 
+              name="date" 
+              type="date" 
+              value={date}
+            />
           </div>
-          <Field friends={this.state.friends} />
+          <div>
+            <label htmlFor="description">Event Description</label>
+            <textarea 
+              rows="5"
+              cols="33"
+              id="description" 
+              name="description" 
+              type="textarea" 
+              value={description}
+            > Hey Friends, guess what!? ... </textarea>
+          </div>
+          <Field friends={friends} deleteBtn={this.removeFriend}/>
           <input type="submit" value="Shuffle my Friends!" />
         </form>
         <button onClick={this.addFriend}>Add Friend</button>
