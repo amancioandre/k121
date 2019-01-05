@@ -1,37 +1,42 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-export default ({ title, date, description }) => {
+/* Material UI */
+import { TextField } from '@material-ui/core';
+
+export default ({ event: { title, date, description } }) => {
   return (
-    <div>
-      <div>
-        <label htmlFor="title">Event Title</label>
-        <input
+    <Fragment>
+      <div className="Event">
+        <TextField
+          margin="normal"
+          variant="outlined"
           id="title"
           name="title"
-          type="text"
-          value={title}
+          defaultValue={title !== '' ? title : ''}
+          label="Your Event Title"
+          required
         />
-      </div>
-      <div>
-        <label htmlFor="date">Event Date</label>
-        <input
+        <TextField
+          margin="normal"
+          variant="outlined"
           id="date"
           name="date"
-          type="date"
-          value={date}
+          defaultValue={date !== '' ? date : ''}
+          label="When?"
+          required
         />
-      </div>
-      <div>
-        <label htmlFor="description">Event Description</label>
-        <textarea
-          rows="5"
-          cols="33"
+        <TextField
+          margin="normal"
+          multiline
+          rows="6"
+          variant="outlined"
           id="description"
           name="description"
-          type="textarea"
-          value={description}
-        > Hey Friends, guess what!? ... </textarea>
+          defaultValue={description !== '' ? description : ''}
+          label="What an invitation says..."
+          required
+        />
       </div>
-    </div>
+    </Fragment>
   )
 }

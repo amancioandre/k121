@@ -1,7 +1,9 @@
 import React from 'react';
 
+import './Friend.css';
+
 /* Material UI */
-import { Icon, IconButton } from '@material-ui/core';
+import { Icon, IconButton, TextField } from '@material-ui/core';
 
 const form = (props) => {
   const fields = props.friends.map((field, i) => {
@@ -11,13 +13,26 @@ const form = (props) => {
     return (
       <div key={i} className="friendField">
         <div>
+        <TextField
+          margin="normal"
+          variant="outlined"
+          label="Name"
+          defaultValue={props.friends[i].name}
+          inputProps={{
+            "data-id": i, 
+            id: nameId,
+            name: nameId,
+            className: 'name',
+          }}
+          required
+        />
           <label htmlFor={nameId}>Name</label>
           <input 
             id={nameId}
             data-id={i} 
             type="text" 
             name={nameId}
-            value={props.friends[i].name}
+            defaultValue={props.friends[i].name}
             className='name' 
             required />
         </div>
@@ -28,13 +43,15 @@ const form = (props) => {
             data-id={i} 
             type="email" 
             name={emailId}
-            value={props.friends[i].email}
+            defaultValue={props.friends[i].email}
             className='email' 
             required />
         </div>
-        <IconButton className='deleteFriend' onClick={(i) => props.deleteBtn(i)}>
-          <Icon>delete</Icon>
-        </IconButton>
+        <div className='deleteBtn'>
+          <IconButton onClick={(i) => props.deleteBtn(i)}>
+            <Icon>delete</Icon>
+          </IconButton>
+        </div>
       </div>
     )
   })

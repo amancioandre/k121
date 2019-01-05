@@ -10,6 +10,8 @@ import Backdrop from "../../Components/Backdrop/Backdrop";
 /* Material UI */
 import { IconButton, Icon } from "@material-ui/core";
 
+import './Secret.css';
+
 export default class Secret extends Component {
   constructor(props) {
     super(props);
@@ -21,10 +23,10 @@ export default class Secret extends Component {
         date: '',
         time: '',
         giftValue: '',
-        description: 'Hey friends, guess what!? ...'
+        description: ''
       },
       submiting: false,
-      step: 0,
+      step: 2,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,11 +40,19 @@ export default class Secret extends Component {
 
   handleChange(e) {
     const { value, className, dataset: { id }, name } = e.target;
+    let myClass = className;
+    if ( myClass.includes('name') ) {
+      myClass = 'name'
+    } else if( myClass.includes('email')) {
+      myClass = 'email'
+    }
+
+    console.log(e.target, myClass)
     const { event } = this.state
 
-    if (["name", "email"].includes(className)) {
+    if (["name", "email"].includes(myClass)) {
       let friends = [...this.state.friends];
-      friends[id][className] = value;
+      friends[id][myClass] = value;
       this.setState({ friends });
     } else {
       event[name] = value;
@@ -107,7 +117,7 @@ export default class Secret extends Component {
           <div>
             <h2>Let's call some friends!</h2>
             <Friends friends={friends} deleteBtn={this.removeFriend}/>
-            <IconButton 
+            Add Friend <IconButton 
               color="secondary"
               onClick={this.addFriend}>
                 <Icon>add_circle</Icon>
@@ -115,28 +125,28 @@ export default class Secret extends Component {
             <IconButton 
               onClick={this.clearFriends}>
                 <Icon>cancel</Icon>
-            </IconButton>
+            </IconButton> Clear List
           </div>; break;
       case 3: // Send!
         displayStep = 
           <div>
             <h2>Ok, are you ready!?</h2>
-            <input type="submit" value="Yes! Shuffle my Friends!" />
+            <input className="submitBtn" type="submit" value="Yes! Shuffle my Friends!" />
           </div>; break;
       default:
         displayStep = null; break;
     }
 
     return (
-      <div>
+      <div className="Shuffler">
         { submiting ? <Backdrop /> : null }
-        <form onChange={(e) => this.handleChange(e)}>
+        <form onChange={(e) => this.handleChange(e)} onSubmit={this.handleSubmit}>
           {displayStep}          
         </form>
         <div>
           <IconButton
             id='prevStep'
-            size='small' 
+            size='medium' 
             onClick={this.prevStep} 
             disabled={ step<=0 }>
               <Icon>arrow_back_ios</Icon>
