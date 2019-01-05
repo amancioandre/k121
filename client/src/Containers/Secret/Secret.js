@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 
 /* Components */
 import Field from "../../Components/Form/Fields";
+import Backdrop from "../../Components/Backdrop/Backdrop";
 
 export default class Secret extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ export default class Secret extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
+    this.setState({ submiting: !this.state.submiting })
     /* Axios Stuff */
   }
 
@@ -68,10 +69,10 @@ export default class Secret extends Component {
   }
 
   render() {
-    const { friends, event: { title, date, description } } = this.state;
-
+    const { friends, event: { title, date, description }, submiting } = this.state;
     return (
       <div>
+        { submiting ? <Backdrop /> : null }
         <form onChange={(e) => this.handleChange(e)}>
           <div>
             <label htmlFor="title">Event Title</label>
