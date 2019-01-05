@@ -9,7 +9,7 @@ const form = (props) => {
     let emailId = `email-${i}`;
 
     return (
-      <div key={i}>
+      <div key={i} className="friendField">
         <div>
           <label htmlFor={nameId}>Name</label>
           <input 
@@ -32,7 +32,7 @@ const form = (props) => {
             className='email' 
             required />
         </div>
-        <IconButton onClick={(i) => props.deleteBtn(i)}>
+        <IconButton className='deleteFriend' onClick={(i) => props.deleteBtn(i)}>
           <Icon>delete</Icon>
         </IconButton>
       </div>

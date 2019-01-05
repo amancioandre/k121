@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 
 /* Components */
+import Landing from "../../Components/Landing/Landing";
 import Event from "../../Components/Form/Event";
 import Friends from "../../Components/Form/Friend";
 import Backdrop from "../../Components/Backdrop/Backdrop";
@@ -23,7 +24,7 @@ export default class Secret extends Component {
         description: 'Hey friends, guess what!? ...'
       },
       submiting: false,
-      step: 2,
+      step: 0,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -92,17 +93,19 @@ export default class Secret extends Component {
     switch(step) {
       case 0: // APP Title and Description, Landing Page per se.
         displayStep = 
-          <div>
-            App Title
-            App Description
-          </div>; break;
+          <Landing />; break;
       
       case 1: // Event Form
-        displayStep = <Event event={event} />; break;
+        displayStep = 
+          <div>
+            <h2>Tell me about your event.</h2>
+            <Event event={event} />
+          </div>; break;
       
       case 2: // Friends Form
         displayStep = 
           <div>
+            <h2>Let's call some friends!</h2>
             <Friends friends={friends} deleteBtn={this.removeFriend}/>
             <IconButton 
               color="secondary"
@@ -111,12 +114,14 @@ export default class Secret extends Component {
             </IconButton>
             <IconButton 
               onClick={this.clearFriends}>
-                <Icon>cancel</Icon></IconButton>
+                <Icon>cancel</Icon>
+            </IconButton>
           </div>; break;
       case 3: // Send!
         displayStep = 
           <div>
-            <input type="submit" value="Shuffle my Friends!" />
+            <h2>Ok, are you ready!?</h2>
+            <input type="submit" value="Yes! Shuffle my Friends!" />
           </div>; break;
       default:
         displayStep = null; break;
