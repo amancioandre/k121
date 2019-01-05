@@ -1,5 +1,8 @@
 import React from 'react';
 
+/* Material UI */
+import { Icon, IconButton } from '@material-ui/core';
+
 const form = (props) => {
   const fields = props.friends.map((field, i) => {
     let nameId = `name-${i}`;
@@ -29,7 +32,9 @@ const form = (props) => {
             className='email' 
             required />
         </div>
-        <button onClick={(i) => props.deleteBtn(i)}>Remove</button>
+        <IconButton onClick={(i) => props.deleteBtn(i)}>
+          <Icon>delete</Icon>
+        </IconButton>
       </div>
     )
   })

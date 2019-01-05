@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
-/* CSS Files */
-
 
 /* Components */
-import Field from "../../Components/Form/Fields";
+import Event from "../../Components/Form/Event";
+import Friends from "../../Components/Form/Friend";
 import Backdrop from "../../Components/Backdrop/Backdrop";
+
+/* Material UI */
+import { IconButton, Icon } from "@material-ui/core";
 
 export default class Secret extends Component {
   constructor(props) {
@@ -21,6 +23,7 @@ export default class Secret extends Component {
         description: 'Hey friends, guess what!? ...'
       },
       submiting: false,
+      step: 2,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -28,6 +31,8 @@ export default class Secret extends Component {
     this.addFriend = this.addFriend.bind(this);
     this.removeFriend = this.removeFriend.bind(this);
     this.clearFriends = this.clearFriends.bind(this);
+    this.nextStep = this.nextStep.bind(this);
+    this.prevStep = this.prevStep.bind(this);
   }
 
   handleChange(e) {
@@ -65,49 +70,80 @@ export default class Secret extends Component {
   }
 
   clearFriends() {
-    this.setState({ friends: [{ name: '', email: ''}]} );
+    this.setState({ friends: [{ name: '', email: ''}]});
+  }
+
+  nextStep() {
+    let { step } = this.state;
+    step >= 3 ? step = 3 : step += 1;
+    this.setState({ step });
+  }
+
+  prevStep() {
+    let { step } = this.state;
+    step <= 0 ? step = 0 : step -= 1;
+    this.setState({ step });
   }
 
   render() {
-    const { friends, event: { title, date, description }, submiting } = this.state;
+    const { friends, event, submiting, step } = this.state;
+    let displayStep = '';
+
+    switch(step) {
+      case 0: // APP Title and Description, Landing Page per se.
+        displayStep = 
+          <div>
+            App Title
+            App Description
+          </div>; break;
+      
+      case 1: // Event Form
+        displayStep = <Event event={event} />; break;
+      
+      case 2: // Friends Form
+        displayStep = 
+          <div>
+            <Friends friends={friends} deleteBtn={this.removeFriend}/>
+            <IconButton 
+              color="secondary"
+              onClick={this.addFriend}>
+                <Icon>add_circle</Icon>
+            </IconButton>
+            <IconButton 
+              onClick={this.clearFriends}>
+                <Icon>cancel</Icon></IconButton>
+          </div>; break;
+      case 3: // Send!
+        displayStep = 
+          <div>
+            <input type="submit" value="Shuffle my Friends!" />
+          </div>; break;
+      default:
+        displayStep = null; break;
+    }
+
     return (
       <div>
         { submiting ? <Backdrop /> : null }
         <form onChange={(e) => this.handleChange(e)}>
-          <div>
-            <label htmlFor="title">Event Title</label>
-            <input 
-              id="title" 
-              name="title" 
-              type="text" 
-              value={title}
-            />
-          </div>
-          <div>
-            <label htmlFor="date">Event Date</label>
-            <input 
-              id="date" 
-              name="date" 
-              type="date" 
-              value={date}
-            />
-          </div>
-          <div>
-            <label htmlFor="description">Event Description</label>
-            <textarea 
-              rows="5"
-              cols="33"
-              id="description" 
-              name="description" 
-              type="textarea" 
-              value={description}
-            > Hey Friends, guess what!? ... </textarea>
-          </div>
-          <Field friends={friends} deleteBtn={this.removeFriend}/>
-          <input type="submit" value="Shuffle my Friends!" />
+          {displayStep}          
         </form>
-        <button onClick={this.addFriend}>Add Friend</button>
-        <button onClick={this.clearFriends}>Clear Friends List</button>
+        <div>
+          <IconButton
+            id='prevStep'
+            size='small' 
+            onClick={this.prevStep} 
+            disabled={ step<=0 }>
+              <Icon>arrow_back_ios</Icon>
+          </IconButton>
+          <IconButton
+            id='nextStep'
+            size='small' 
+            onClick={this.nextStep} 
+            disabled={ step>=3 }>
+              <Icon>arrow_forward_ios</Icon>  
+          </IconButton>
+        </div>
       </div>
     )
   }
