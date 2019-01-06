@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 const express = require('express');
+const mailgun = require('mailgun-js');
 
 const router = express.Router();
 
@@ -66,9 +68,23 @@ router.get('/secret/:eventId', (req, res, next) => {
         const secretFriend = idList.splice(idx, 1)[0];
         Friend.findOneAndUpdate({ _id: friend._id }, { secretFriend }, { new: true })
           .populate('secretFriend')
-          .then(res => console.log('inside next then', res)) // Email Logic Goes here!
+          .then((shuffled) => { // Email Logic Goes here!
+            console.log('>>>>>>>>>>> inside findOneAndUpdate', event, shuffled);
+            const data = {
+              from: 'Shuffle my Friends! <shuffle@myfriends.com>',
+              to: shuffled.email,
+              subject: `${event.title} from Shuffle my Friends!`,
+              text: `${event.description}
+                    Your secret friend is: ${shuffled.secretFriend.name}, ${shuffled.secretFriend.email}`,
+            };
+            mailgun.messages().send(data, (err, body) => {
+              if (err) { console.log('inside mailgun error', err); }
+              console.log(body);
+            });
+            res.json({ message: 'All done! Have a happy celebration of friendship! ' });
+          })
+          .catch(err => res.json(err));
       });
-      res.json({ message: 'All done! Have a happy celebration of friendship! ' });
     })
     .catch(() => {
       res.json({ message: 'Uh-oh, something went wrong. Terribly wrong' });
