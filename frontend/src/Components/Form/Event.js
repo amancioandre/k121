@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 
+import './Event.css';
+
 /* Material UI */
 import { TextField } from '@material-ui/core';
 

@@ -12,7 +12,7 @@ const form = (props) => {
 
     return (
       <div key={i} className="friendField">
-        <div>
+        <div className="inputFriend">
         <TextField
           margin="normal"
           variant="outlined"
@@ -26,26 +26,22 @@ const form = (props) => {
           }}
           required
         />
-          <label htmlFor={nameId}>Name</label>
-          <input 
-            id={nameId}
-            data-id={i} 
-            type="text" 
-            name={nameId}
-            defaultValue={props.friends[i].name}
-            className='name' 
-            required />
         </div>
-        <div>
-          <label htmlFor={emailId}>Email</label>
-          <input 
-            id={emailId}
-            data-id={i} 
+        <div className="inputFriend">
+          <TextField
+            margin="normal"
+            variant="outlined"
+            label="Email"
             type="email" 
-            name={emailId}
             defaultValue={props.friends[i].email}
-            className='email' 
-            required />
+            inputProps={{
+              id: emailId,
+              "data-id": i,
+              name: emailId,
+              className: 'email',
+            }}
+            required
+          />
         </div>
         <div className='deleteBtn'>
           <IconButton onClick={(i) => props.deleteBtn(i)}>
