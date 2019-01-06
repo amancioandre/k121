@@ -1,0 +1,16 @@
+.friendField {
+  margin: 5px auto;
+  padding: 5px;
+  width: 500px;
+  height: 70px;
+}
+
+.deleteBtn {
+  position: relative;
+  top: -60px;
+  left: 480px;
+  margin: 0;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+}
