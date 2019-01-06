@@ -66,13 +66,19 @@ export default class Secret extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const service = this.service
     // this.setState({ submiting: !this.state.submiting })
     /* Manipulating Data for Sending */
     const  { friends, event } = this.state
-    const secret = { friends, event }
     /* Axios Stuff */
-    this.service.post('/', { secret })
-      .then(response => this.setState({ message: response.data.message }))
+    service.post('/', { friends, event })
+      .then(response => {
+        const { _id } = response.data
+        console.log(_id)
+        service.get(`/secret/${_id}`)
+          .then(secretResponse => console.log(secretResponse))
+        this.setState({ message: response.data.message })
+      })
       .catch(err => this.setState({ message: err }))
   }
 

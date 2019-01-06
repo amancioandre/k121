@@ -20,9 +20,9 @@ export default ({ event: { title, date, description } }) => {
           margin="normal"
           variant="outlined"
           id="date"
+          type="date"
           name="date"
           defaultValue={date !== '' ? date : ''}
-          label="When?"
           required
         />
         <TextField

@@ -25,12 +25,13 @@ router.get('/', (req, res, next) => {
 /* With the frontend logic, it is expected to be delivered two objects: the first is the event,
 and the last, the friends array. */
 router.post('/', (req, res, next) => {
-  console.log(req.body);
   const { event, friends } = req.body;
+
   Friend.create(friends)
     .then((response) => {
       const friendIds = response.map(friend => friend._id);
       event.friends = friendIds;
+
       Event.create(event)
         .then(eventResponse => res.json(eventResponse))
         .catch(err => res.json(err));
@@ -46,12 +47,15 @@ cracking into the client code to get his or hers bestie, cheating our algorithms
 So let's leave the shuffling to the back end. */
 
 router.get('/secret/:eventId', (req, res, next) => {
+  const { eventId } = req.params;
   const rnd = size => Math.floor(Math.random() * size);
 
-  Event.find()
+  Event.findById(eventId)
     .populate('friends')
-    .then(({ friends }) => {
-      /* I will refactor this code into a helper after. */
+    .then((event) => {
+      const { friends } = event;
+
+      /* I will refactor this code into a helper later. */
       const idList = friends.reduce((acc, friend) => {
         acc.push(friend._id);
         return acc;
@@ -60,13 +64,12 @@ router.get('/secret/:eventId', (req, res, next) => {
         const idx = rnd(idList.length);
 
         const secretFriend = idList.splice(idx, 1)[0];
-        console.log(friend, idx, secretFriend);
-        Friend.findOneAndUpdate({ _id: friend._id }, { secretFriend })
-          .then(res => console.log('>>>>', res));
+        Friend.findOneAndUpdate({ _id: friend._id }, { secretFriend }, { new: true })
+          .populate('secretFriend')
+          .then(res => console.log('inside next then', res)) // Email Logic Goes here!
       });
       res.json({ message: 'All done! Have a happy celebration of friendship! ' });
     })
-    .then(res => console.log('inside next then'))
     .catch(() => {
       res.json({ message: 'Uh-oh, something went wrong. Terribly wrong' });
     });
