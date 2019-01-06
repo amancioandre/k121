@@ -1,47 +1,87 @@
-Problema do Amigo Secreto
+# Shuffle my Friends!
 
-1. Crie um backend simples usando mongoose e algum framework web qualquer para salvar as pessoas (nome, email, amigo). Um CRUD bem simples mesmo.
+Shuffle my Friends! is a JavaScript test for a Full Stack Developer position.
 
-2. Crie um frontend bem simples usando Angular ou React para listar, cadastrar, editar e apagar as pessoas e realizar o sorteio.
+### What is it about?
+  - It helps shuffle your invitees list so each guest receives a random Secret Friend.
+  - It provides an brief invitation text.
+  - Currently not able to work magic, though!
 
-3. Crie um botão no frontend para realizar o sorteio e enviar para cada pessoa um email contendo o amigo sorteado. Salve o nome de cada amigo sorteado (campo amigo)
+> Secret Santa (**here I call it Secret Friends, an actual Portuguese literal translation for the same game**) is a Western Christmas tradition in which members of a group or community are randomly assigned a person to whom they give a gift. The identity of the gift giver is a secret not to be revealed until after the gift is opened.
 
-4. IMPORTANTE: crie um repositório público no github com o nome de k121 e ao terminar responda esse email com a url do github. A url deve possuir o padrão: github.com/seu-user/k121. Crie uma pasta frontend e outra backend na raiz e escreva as instruções de como executar o programa no README.md
+*An exerpt from Wikipedia.*
 
-Dicas: 
+### How was it done?
 
-- Use um banco de dados free (mlab.com por exemplo). Pode também usar o próprio mongodb em localhost.
+* [React] - Framework for Web Client Development.
+* [Node.JS] - For the API Development.
+* [MongoDB] - A noSQL Database.
+* [Material UI] - React Components UI.
+* [Express] - fast node.js network app framework [@tjholowaychuk]
+* [Mongoose] - Elegant mongodb object modelling for Node.JS
+* [Mailgun] - Easy SMTP Integration
 
-- Use um servidor free para envio de emails (mailgun.com por exemplo). Pode também usar o FakeSMTP (https://nilhcem.github.io/FakeSMTP/) também
+### Installation
 
-- Se não souber o que é um amigo secreto pesquise: https://pt.wikipedia.org/wiki/Amigo_secreto
+Shuffle my Friends requires [Node.js] and [React] to run.
+If you wish to run a local version, you will need [MongoDB].
 
-O que será avaliado:
+Fork or Clone this [Repo]. You will have two main folders: *backend* and *frontend*.
+```sh
+$ git clone https://github.com/amancioandre/k121.git
+```
+##### Installing the Front End - *Client*
 
-Basicamente TUDO. Se conseguir publicar o sistema em algum servidor free, tipo heroku ou qualquer um outro, seria uma boa. Iria me ajudar bastante :)
+Move to folder and install dependencies:
+```sh
+$ cd frontend
+$ npm i
+```
+To run the application type.
 
-Seu prazo é de 5 dias à partir de hoje.
-~ Mas não ligamos se você quiser entregar antes rs. ;)
+```sh
+$ npm run start
+```
+##### Installing the Back End - *API*
 
-Estamos ansiosos pra ver seu amigo secreto funcionado!
+Move to folder and install dependencies:
+```sh
+$ cd backend
+$ npm i
+```
+Create a .env at root level and pass this environment variables:
+```sh
+$ touch .env
+```
+MONGODB_URI: The database url, local or web.
+AUTHORIZED_URL: CORS need an authorized url to enable requests from addresses outside the server environment.
+MAILGUN_API_KEY: Your Mailgun API key.
+MAILGUN_DOMAIN: The sandbox domain Mailgun provides.
 
-Dúvidas? É só responder este e-mail.
 
-Att.
-@TechTeam Kenoby
+To run the application type.
 
+```sh
+$ npm run dev
+```
 
-#Hipóteses#
-1) Deve-se aceitar um número muito grande de amigos.
-2) Uma turma não pode se misturar com outra. -> Sol. tempo de expiração dos dados da database?
-3) A roleta pode ocorrer no client e na api. Problemas, roleta no client pode ser adulterada, server é mais seguro.
-4) Se o amigo secreto for ele mesmo, escolha outro.
-  Problema: o amigo pode ser ele mesmo se for o último.
+### Todos
 
-Development Process
+ - Write Tests
+ - Review shuffling algorithm
+ - Develop means to access Events and Friends and edit them after the request is done.
+ - Add media queries to provide responsiveness
 
-Repository for the whole project - check
-Separate folders:
-  RESTful API (server, database architecture, routes) - check
-  Client (React) - check
+License
+----
 
+MIT
+
+  [React]: <https://reactjs.org/>
+  [Node.JS]: <https://nodejs.org/en/>
+  [MongoDB]: <https://www.mongodb.com/>
+  [Material UI]: <https://material-ui.com/>
+  [Express]: <https://expressjs.com/pt-br/>
+  [Mongoose]: <https://mongoosejs.com/>
+  [Repo]: <https://github.com/amancioandre/k121>
+  [Mailgun]: <https://www.mailgun.com/>
