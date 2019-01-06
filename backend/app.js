@@ -11,7 +11,7 @@ const cors = require('cors');
 const app = express();
 
 /* DATABASE CONNECTION */
-mongoose.connect('mongodb://localhost/secret-friends', { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then((output) => {
     console.log(`Connected to Mongo: Database ${output.connections[0].name}`);
   })
