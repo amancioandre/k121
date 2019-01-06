@@ -9,7 +9,10 @@ const Mailgun = require('mailgun-js');
 const router = express.Router();
 
 /* Mailgun Setup */
-const mailgun = new Mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN})
+const mailgun = new Mailgun({
+  apiKey: process.env.MAILGUN_API_KEY,
+  domain: process.env.MAILGUN_DOMAIN,
+});
 
 /* Models */
 const Friend = require('../models/friend');

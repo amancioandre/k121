@@ -24,12 +24,12 @@ export default class Secret extends Component {
         description: ''
       },
       submiting: false,
-      step: 2,
+      step: 0,
       message: ''
     }
 
     this.service = axios.create({
-      baseURL: 'http://localhost:5000',
+      baseURL: 'https://shufflemyfriends.herokuapp.com/',
       withCredentials: true
     });
 
@@ -66,7 +66,7 @@ export default class Secret extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const service = this.service
-    // this.setState({ submiting: !this.state.submiting })
+    this.setState({ submiting: !this.state.submiting })
     /* Manipulating Data for Sending */
     const  { friends, event } = this.state
     /* Axios Post starts Shuffling and Generating  */
@@ -75,8 +75,11 @@ export default class Secret extends Component {
         const { _id } = response.data
 
         service.get(`/secret/${_id}`)
-          .then(secretResponse => console.log(secretResponse))
-        this.setState({ message: response.data.message })
+          .then(secretResponse => {
+            const { message } = secretResponse.data
+            this.setState({ message })
+            setTimeout(() => document.location.reload(true), 5000); 
+          })
       })
       .catch(err => this.setState({ message: err }))
   }
@@ -112,7 +115,7 @@ export default class Secret extends Component {
   }
 
   render() {
-    const { friends, event, submiting, step } = this.state;
+    const { friends, event, submiting, step, message } = this.state;
     let displayStep = '';
 
     switch(step) {
@@ -154,7 +157,7 @@ export default class Secret extends Component {
 
     return (
       <div className="Shuffler">
-        { submiting ? <Backdrop /> : null }
+        { submiting ? <Backdrop message={message} /> : null }
         <form onChange={(e) => this.handleChange(e)} onSubmit={this.handleSubmit}>
           {displayStep}          
         </form>
