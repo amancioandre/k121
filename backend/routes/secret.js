@@ -6,6 +6,7 @@ const router = express.Router();
 
 /* Models */
 const Friend = require('../models/friend');
+const Event = require('../models/events');
 
 /* RESTful Architecture */
 /* Show all Friends */
@@ -21,12 +22,18 @@ router.get('/', (req, res, next) => {
 });
 
 /* Create a new friend into the database */
+/* With the frontend logic, it is expected to be delivered two objects: the first is the event,
+and the last, the friends array. */
 router.post('/', (req, res, next) => {
-  const { name, email } = req.body;
-  const friend = { name, email };
-  Friend.create(friend)
+  console.log(req.body)
+  const { event, friends } = req.body;
+  Friend.create(friends)
     .then((response) => {
-      res.json(response);
+      const friendIds = response.map((friend) => friend._id);
+      event.friends = friendIds;
+      Event.create(event)
+        .then(eventResponse => res.json(eventResponse))
+        .catch(err => res.json(err));
     })
     .catch((err) => {
       res.json(err);
@@ -38,11 +45,12 @@ router.post('/', (req, res, next) => {
 cracking into the client code to get his or hers bestie, cheating our algorithms, do we?
 So let's leave the shuffling to the back end. */
 
-router.get('/secret', (req, res, next) => {
+router.get('/secret/:eventId', (req, res, next) => {
   const rnd = size => Math.floor(Math.random() * size);
 
-  Friend.find()
-    .then((friends) => {
+  Event.find()
+    .populate('friends')
+    .then(({ friends }) => {
       /* I will refactor this code into a helper after. */
       const idList = friends.reduce((acc, friend) => {
         acc.push(friend._id);

@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 
 const eventSchema = new Schema({
-  name: String,
+  title: String,
   date: Date,
-  friends: { type: mongoose.SchemaTypes.ObjectId, ref: 'Friend' }
-})
+  description: String,
+  friends: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Friend' }],
+});
 
 const Event = mongoose.model('Event', eventSchema);
 
