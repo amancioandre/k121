@@ -5,6 +5,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 /* APP INITIALIZATION */
 const app = express();
@@ -21,8 +22,10 @@ mongoose.connect('mongodb://localhost/secret-friends', { useNewUrlParser: true }
 /* APP SETUP */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-/* We must require CORS sometime along the development! */
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:300']
+}));
 
 /* APP ROUTES */
 const secret = require('./routes/secret');
