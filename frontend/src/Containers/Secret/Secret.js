@@ -66,7 +66,7 @@ export default class Secret extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({ submiting: !this.state.submiting })
+    // this.setState({ submiting: !this.state.submiting })
     /* Manipulating Data for Sending */
     const  { friends, event } = this.state
     const secret = { friends, event }
