@@ -1,10 +1,15 @@
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
+require('dotenv').config();
+
 const express = require('express');
-const mailgun = require('mailgun-js');
+const Mailgun = require('mailgun-js');
 
 const router = express.Router();
+
+/* Mailgun Setup */
+const mailgun = new Mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN})
 
 /* Models */
 const Friend = require('../models/friend');
@@ -69,7 +74,6 @@ router.get('/secret/:eventId', (req, res, next) => {
         Friend.findOneAndUpdate({ _id: friend._id }, { secretFriend }, { new: true })
           .populate('secretFriend')
           .then((shuffled) => { // Email Logic Goes here!
-            console.log('>>>>>>>>>>> inside findOneAndUpdate', event, shuffled);
             const data = {
               from: 'Shuffle my Friends! <shuffle@myfriends.com>',
               to: shuffled.email,
@@ -77,11 +81,12 @@ router.get('/secret/:eventId', (req, res, next) => {
               text: `${event.description}
                     Your secret friend is: ${shuffled.secretFriend.name}, ${shuffled.secretFriend.email}`,
             };
+
             mailgun.messages().send(data, (err, body) => {
               if (err) { console.log('inside mailgun error', err); }
               console.log(body);
+              res.json({ message: 'All done! Have a happy celebration of friendship! ' });
             });
-            res.json({ message: 'All done! Have a happy celebration of friendship! ' });
           })
           .catch(err => res.json(err));
       });

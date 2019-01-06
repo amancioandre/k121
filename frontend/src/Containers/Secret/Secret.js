@@ -51,7 +51,6 @@ export default class Secret extends Component {
       myClass = 'email'
     }
 
-    console.log(e.target, myClass)
     const { event } = this.state
 
     if (["name", "email"].includes(myClass)) {
@@ -70,11 +69,11 @@ export default class Secret extends Component {
     // this.setState({ submiting: !this.state.submiting })
     /* Manipulating Data for Sending */
     const  { friends, event } = this.state
-    /* Axios Stuff */
+    /* Axios Post starts Shuffling and Generating  */
     service.post('/', { friends, event })
       .then(response => {
         const { _id } = response.data
-        console.log(_id)
+
         service.get(`/secret/${_id}`)
           .then(secretResponse => console.log(secretResponse))
         this.setState({ message: response.data.message })
