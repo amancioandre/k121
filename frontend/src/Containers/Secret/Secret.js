@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 
 /* Components */
 import Landing from "../../Components/Landing/Landing";
@@ -21,13 +21,17 @@ export default class Secret extends Component {
       event: { 
         title: '',
         date: '',
-        time: '',
-        giftValue: '',
         description: ''
       },
       submiting: false,
       step: 2,
+      message: ''
     }
+
+    this.service = axios.create({
+      baseURL: 'http://localhost:5000',
+      withCredentials: true
+    });
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,7 +67,13 @@ export default class Secret extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ submiting: !this.state.submiting })
+    /* Manipulating Data for Sending */
+    const  { friends, event } = this.state
+    const secret = { friends, event }
     /* Axios Stuff */
+    this.service.post('/', { secret })
+      .then(response => this.setState({ message: response.data.message }))
+      .catch(err => this.setState({ message: err }))
   }
 
   addFriend() {

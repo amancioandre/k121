@@ -25,11 +25,11 @@ router.get('/', (req, res, next) => {
 /* With the frontend logic, it is expected to be delivered two objects: the first is the event,
 and the last, the friends array. */
 router.post('/', (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
   const { event, friends } = req.body;
   Friend.create(friends)
     .then((response) => {
-      const friendIds = response.map((friend) => friend._id);
+      const friendIds = response.map(friend => friend._id);
       event.friends = friendIds;
       Event.create(event)
         .then(eventResponse => res.json(eventResponse))
