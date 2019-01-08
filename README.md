@@ -20,6 +20,7 @@ Shuffle my Friends! is a JavaScript test for a Full Stack Developer position.
 * [Express] - fast node.js network app framework [@tjholowaychuk]
 * [Mongoose] - Elegant mongodb object modelling for Node.JS
 * [Mailgun] - Easy SMTP Integration
+* [Enzyme] - An airbnb library for React testing
 
 ### Installation
 
@@ -65,9 +66,21 @@ To run the application type.
 $ npm run dev
 ```
 
+##### Testing
+
+###### Client
+
+The client tests are powered by [Enzyme]. Please refer to the ** *.test.js ** files to see the tests.
+At the cliend folder, run the command npm test
+```sh
+$ cd frontend
+$ npm test
+```
+
+
 ### Todos
 
- - Write Tests
+ - Write more, better, tests for React and Node.
  - Review shuffling algorithm
  - Develop means to access Events and Friends and edit them after the request is done.
  - Add media queries to provide responsiveness
@@ -85,3 +98,4 @@ MIT
   [Mongoose]: <https://mongoosejs.com/>
   [Repo]: <https://github.com/amancioandre/k121>
   [Mailgun]: <https://www.mailgun.com/>
+  [Enzyme]: <https://airbnb.io/enzyme/>
