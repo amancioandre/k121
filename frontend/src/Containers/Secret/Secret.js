@@ -12,7 +12,7 @@ import { IconButton, Icon } from "@material-ui/core";
 
 import './Secret.css';
 
-export default class Secret extends Component {
+export class Secret extends Component {
   constructor(props) {
     super(props);
 
@@ -181,3 +181,6 @@ export default class Secret extends Component {
     )
   }
 }
+
+
+export default Secret;
