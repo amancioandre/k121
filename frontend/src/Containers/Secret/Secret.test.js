@@ -26,7 +26,7 @@ describe('<Secret />: Renders correct components based on state', () => {
     });
   
     it('should render <Event /> if state.step === 1', () => {
-      wrapper.setProps(event => null);
+
       wrapper.setState({ step: 1 }, () => {
         wrapper.update();
         expect(wrapper.containsAnyMatchingElements(
@@ -56,7 +56,9 @@ describe('<Secret />: Renders correct components based on state', () => {
         .toEqual(true);
       });
     });
+  });
 
+  describe('Render corect component based on submiting value', () => {
     it('should render <Backdrop /> if submitting === true', () => {
       wrapper.setState({ submiting: true }, () => {
         expect(wrapper.containsAnyMatchingElements(
@@ -105,20 +107,29 @@ describe('<Secret />: Step Methods must increment/decrement steps by one and cap
   });
 });
 
-describe('<Secret />: Add/Clear methods', () => {
+describe('<Secret />: Add/Remove and Clear Friends methods', () => {
 
   const wrapper = shallow(<Secret />).instance();
-  const { addFriend } = wrapper;
-  const { clearFriends } = wrapper;
+  const { addFriend, removeFriend, clearFriends } = wrapper;
 
-  const length = Math.floor(Math.random() * 10);
-  for ( let i = 1; i < length; i ++) {
+  const length = Math.floor(Math.random() * 10 + 1);
+  for ( let i = 1; i < length; i += 1) {
     addFriend();
   }
 
   it('addFriend() should increment friends array by 1', () => {
     expect(wrapper.state.friends.length).toEqual(length);
   });
+
+  it('removeFriend(i) should remove one specific friend from the array of friends', () => {
+    
+    const i = Math.floor(Math.random() * wrapper.state.friends.length)
+    const arr = [...wrapper.state.friends];
+    arr.splice(i, 1);
+
+    removeFriend(i);
+    expect(wrapper.state.friends).toEqual(arr);
+  })
 
   it('clearFriends() should leave one empty friend in the friends array', () =>{
     clearFriends();
