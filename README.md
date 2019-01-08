@@ -9,7 +9,7 @@ Shuffle my Friends! is a JavaScript test for a Full Stack Developer position.
 
 > Secret Santa (**here I call it Secret Friends, an actual Portuguese literal translation for the same game**) is a Western Christmas tradition in which members of a group or community are randomly assigned a person to whom they give a gift. The identity of the gift giver is a secret not to be revealed until after the gift is opened.
 
-*An exerpt from Wikipedia.*
+*An excerpt from Wikipedia.*
 
 ### How was it done?
 
